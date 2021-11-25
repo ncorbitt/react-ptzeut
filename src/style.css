@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed&display=swap');
+
+:root {
+  --blue: #1011ef;
+}
+
+html,
+body {
+  font-size: 1em;
+  font-family: 'Barlow Condensed';
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  background-color: var(--blue);
+  height: 70px;
+  position: fixed;
+  width: 100%;
+  color: aliceblue;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 50%);
+  z-index: 3;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  width: 80%;
+}
+
+.header-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.header-title,
+nav h1 {
+  font-size: 1.8em;
+}
+
+.header-title {
+  font-weight: 500;
+  cursor: pointer;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 70px;
+  width: 100%;
+}
+
+.main-main {
+  display: flex;
+  width: 100%;
+  margin-top: 10%;
+}
+.main-input {
+  width: 50%;
+}
+
+.main-output {
+  width: 50%;
+  height: 300px;
+  background-color: #99999e13;
+  align-self: center;
+  border-radius: 7px;
+  padding: 1em;
+  overflow-x: auto;
+}
+
+textarea {
+  width: 75%;
+  height: 100px;
+  word-wrap: break-word;
+  resize: none;
+  padding: 1em;
+  font-family: barlow;
+  font-size: 1.2em;
+  margin-top: 7px;
+  border-radius: 7px;
+}
+
+.main-btn-type {
+  display: flex;
+  align-items: center;
+  width: 50%;
+  margin: 10px 0;
+}
+
+.main-btn {
+  border-radius: 7px;
+  border: 3px solid var(--blue);
+  padding: 0.5em;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.main-btn:hover {
+  background-color: var(--blue);
+  color: aliceblue;
+}
