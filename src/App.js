@@ -182,7 +182,7 @@ function MainContent() {
                 </CopyButton>
                 {list.map((keyword, index) => (
                   <CreateWordSection
-                    word={keyword}
+                    keyword={keyword}
                     onBlur={(e) => addDataToList(e.target.value)}
                   />
                 ))}
