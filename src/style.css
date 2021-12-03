@@ -7,6 +7,7 @@
   --desaturated-dark-pink: #834c69;
   --white: #e6f5ff;
   --light-grey: rgb(51 49 59 / 20%);
+  --font-size: 1em;
 }
 * {
   box-sizing: border-box;
@@ -94,12 +95,16 @@ main {
   margin-left: 10px;
 }
 
+.word {
+  font-size: var(--font-size);
+}
+
 textarea {
   width: 100%;
   word-wrap: break-word;
   resize: none;
   padding: 2em;
-  font-size: 1.5em;
+  font-size: var(--font-size);
   border-radius: 7px;
   border: none;
   font-family: 'Barlow Condensed';

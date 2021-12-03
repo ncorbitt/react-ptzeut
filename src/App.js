@@ -73,7 +73,7 @@ function MainContent() {
 
   function addDataToList(data) {
     let m = {
-      verify: /(?:.*?[\n\s,])/gim,
+      verify: /(?:.*?[\n\s,]+)/gim,
     };
 
     // if there is no data
@@ -131,7 +131,7 @@ function MainContent() {
         key={keyword}
         style={{ marginBottom: 10 }}
       >
-        <Word style={{ fontSize: '1.5em' }}>
+        <Word className="word">
           {`"${keyword}"`} <br /> {`[${keyword}]`}
         </Word>
       </WordSection>
