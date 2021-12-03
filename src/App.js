@@ -1,8 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import './style.css';
+import styled from 'styled-components';
 
 import { Random } from '@styled-icons/fa-solid/Random';
 import { ErrorAlt } from '@styled-icons/boxicons-regular/ErrorAlt';
+
+const s = {
+  height: 450,
+};
+
+// Styled Tags
+const FlexWrapper = styled.section`
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  width: 100%;
+  height: ${s.height}px;
+  border-radius: 7px;
+  overflow-x: auto;
+  color: var(--white);
+  overflow: hidden;
+`;
+const CopyButton = styled.span``;
+const Output = styled.section``;
+const Input = styled.section``;
+const Content = styled.section``;
+const WordSection = styled.section``;
+const Word = styled.span``;
 
 export default function App() {
   return (
@@ -16,7 +40,7 @@ export default function App() {
 function Header({ title }) {
   return (
     <header>
-      <section className="container">
+      <section className="header-container">
         <section className="header-main">
           <section className="header-title">
             <Random size="24" style={{ marginRight: 3, marginTop: '-3px' }} />{' '}
@@ -30,66 +54,47 @@ function Header({ title }) {
 }
 
 function MainContent() {
-  const [dataList, setDataList] = useState([]);
+  const [list, setList] = useState([]);
   const [isNull, setNull] = useState(false);
 
   useEffect(() => {
-    console.log('dataList', dataList);
-  }, [dataList]);
+    console.log('list', list);
+  }, [list]);
 
-  function addData(word) {
-    setDataList((dataList) => {
-      // console.log('add-data -> ', word);
-
-      if (dataList.includes(word)) {
-        return dataList;
+  function addWord(word) {
+    setList((list) => {
+      if (list.includes(word)) {
+        return list;
       } else {
-        return [...dataList, word];
+        return [...list, word];
       }
     });
   }
 
   function addDataToList(data) {
-    let matchTypes = {
-      spaces: /\s+/gim,
-      // commas: /[,]/gmi,
-      commas: /(\w+[-]?\w+,\s*|(?<=,\s*)\w+-\w+)/gim,
-      newLines: /[\n]/gim,
-      wordWithSpacesOnOneLine: /\w+ \w+/gim,
-      verify: /\w+.*\w+[\s+ \n+ ,]|(?<=[, \s+ \n+])\w+-\w+$/gim,
+    let m = {
+      verify: /(?:.*?[\n\s,])/gim,
     };
 
     // if there is no data
-    if (!data) return;
+    if (!list) return;
 
     // Test stuff here
-    //
 
-    console.log('Logged', data);
-    console.log('Logged', data.match(matchTypes.verify));
-    if (data.match(matchTypes.verify) === null) {
+    if (data.match(m.verify) === null) {
+      console.log('Data Null');
       setNull(true);
       return;
     }
 
-    data.match(matchTypes.verify).forEach((word, index, arr) => {
-      if (word.includes('\n')) {
-        // console.log('new-line -> ', word.split('\n')[0]);
-        addData(word.split('\n')[0]);
-      } else if (word.includes(',')) {
-        // console.log('commas -> ', word.split(',')[0]);
-        addData(word.split('\n')[0]);
-      } else if (word.split(' ')) {
-        // console.log('spaces -> ', word.split(' ')[0]);
-        addData(word.split(' ')[0]);
-      } else {
-        return;
-      }
+    data.match(m.verify).forEach((word, index, arr) => {
+      // trim the word of any extra spaces
+      addWord(word.trim());
     });
   }
 
-  const clear = () => {
-    setDataList([]);
+  const clearList = () => {
+    setList([]);
   };
 
   function copyToClipBoard() {
@@ -117,6 +122,22 @@ function MainContent() {
     clipboard.readText().then((text) => alert(text));
   }
 
+  function CreateWordSection({ keyword }) {
+    console.log('keyword', keyword);
+    return (
+      <WordSection
+        className="main-list keyword"
+        id={keyword}
+        key={keyword}
+        style={{ marginBottom: 10 }}
+      >
+        <Word style={{ fontSize: '1em' }}>
+          {`"${keyword}"`} <br /> {`[${keyword}]`}
+        </Word>
+      </WordSection>
+    );
+  }
+
   function exact() {}
   function phrase() {}
 
@@ -124,67 +145,50 @@ function MainContent() {
     <main>
       <section className="container">
         <section className="main-main">
-          <section className="main-input">
-            <section className="main-input-liner">
-              <section className="list-info">
-                {/* <p>comma seperated list okay: item, item, item</p> */}
-                <p
-                  className="error"
-                  style={{ display: isNull ? 'block' : 'none' }}
-                >
-                  {' '}
-                  <ErrorAlt size="24" /> &nbsp; The data is not in the right
-                  format.
-                </p>
-              </section>
-              <section className="main-btn-type">
+          <Input className="main-input">
+            {/* <section className="main-btn-type">
                 <section className="main-btn btn-phrase">Phrase only</section>
                 <section className="main-btn btn-exact">Exact only</section>
                 <section
                   className="main-btn btn-remove"
                   onClick={() => {
-                    clear();
+                    clearList();
                   }}
                 >
                   Remove items
                 </section>
-              </section>
+              </section> */}
+            <FlexWrapper className="wrapper">
               <textarea
+                style={{ height: `${s.height}px` }}
                 id="input-textarea"
                 onFocus={() => setNull(false)}
                 onBlur={(e) => {
-                  if (!e.target.value) clear();
+                  if (!e.target.value) clearList();
                   addDataToList(e.target.value);
                 }}
               ></textarea>
-            </section>
-          </section>
-          <section className="main-output">
-            <section className="main-output-liner">
-              <section
-                className="main-btn btn-copy"
-                onClick={() => copyToClipBoard()}
-              >
-                Copy
-              </section>
-              {dataList.map((word, index) => {
-                return (
-                  <section
-                    className="main-list"
-                    id={word}
-                    key={word}
-                    style={{ marginBottom: 10 }}
-                  >
-                    {' '}
-                    <span style={{ fontSize: '1em' }}>
-                      {' '}
-                      {`"${word}"`} <br /> {`[${word}]`}
-                    </span>{' '}
-                  </section>
-                );
-              })}
-            </section>
-          </section>
+            </FlexWrapper>
+          </Input>
+
+          <Output className="main-output">
+            <FlexWrapper className="wrapper">
+              <Content className="main-output-liner content">
+                <CopyButton
+                  className="main-btn btn-copy"
+                  onClick={() => copyToClipBoard()}
+                >
+                  Copy
+                </CopyButton>
+                {list.map((keyword, index) => (
+                  <CreateWordSection
+                    word={keyword}
+                    onBlur={(e) => addDataToList(e.target.value)}
+                  />
+                ))}
+              </Content>
+            </FlexWrapper>
+          </Output>
         </section>
       </section>
     </main>
