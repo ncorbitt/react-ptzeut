@@ -17,10 +17,10 @@ const FlexWrapper = styled.section`
   width: 100%;
   height: ${s.height}px;
   border-radius: 7px;
-  overflow-x: auto;
   color: var(--white);
-  overflow: hidden;
+  overflow-y: auto;
 `;
+
 const CopyButton = styled.span``;
 const Output = styled.section``;
 const Input = styled.section``;
@@ -131,7 +131,7 @@ function MainContent() {
         key={keyword}
         style={{ marginBottom: 10 }}
       >
-        <Word style={{ fontSize: '1em' }}>
+        <Word style={{ fontSize: '1.5em' }}>
           {`"${keyword}"`} <br /> {`[${keyword}]`}
         </Word>
       </WordSection>
@@ -158,7 +158,10 @@ function MainContent() {
                   Remove items
                 </section>
               </section> */}
-            <FlexWrapper className="wrapper">
+            <FlexWrapper
+              className="wrapper wrapper-input"
+              style={{ overflow: 'hidden' }}
+            >
               <textarea
                 style={{ height: `${s.height}px` }}
                 id="input-textarea"

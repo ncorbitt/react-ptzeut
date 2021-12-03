@@ -99,7 +99,7 @@ textarea {
   word-wrap: break-word;
   resize: none;
   padding: 2em;
-  font-size: 1.2em;
+  font-size: 1.5em;
   border-radius: 7px;
   border: none;
   font-family: 'Barlow Condensed';
@@ -161,11 +161,14 @@ textarea {
 }
 
 .main-output-liner {
+  flex-direction: column;
   display: flex;
   justify-content: center;
+  align-items: center;
   position: relative;
   width: 90%;
-  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1em;
 }
 
 .error {
