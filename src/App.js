@@ -74,12 +74,16 @@ function MainContent() {
   function addDataToList(data) {
     let m = {
       verify: /(?:.*?[\n\s,]+)/gim,
+      // v: /(.*?)[\n\s,]+/gim,
+      v: /(.*?)(?=[\n\s,.])/gim,
     };
 
     // if there is no data
     if (!list) return;
 
-    // Test stuff here
+    // Test stuff
+    console.log('Test ', m.v.test(data));
+    console.log('Match', data.match(m.v));
 
     if (data.match(m.verify) === null) {
       console.log('Data Null');
@@ -87,7 +91,7 @@ function MainContent() {
       return;
     }
 
-    data.match(m.verify).forEach((word, index, arr) => {
+    data.match(m.v).forEach((word, index, arr) => {
       // trim the word of any extra spaces
       addWord(word.trim());
     });

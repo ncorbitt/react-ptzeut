@@ -87,7 +87,7 @@ main {
 
 .main-output,
 .main-input {
-  flex: 1 1 50%;
+  flex: 1 1 auto;
   margin: 7px;
 }
 
