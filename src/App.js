@@ -20,13 +20,14 @@ const FlexWrapper = styled.section`
   color: var(--white);
   overflow-y: auto;
 `;
-
 const CopyButton = styled.span``;
 const Output = styled.section``;
 const Input = styled.section``;
 const Content = styled.section``;
 const WordSection = styled.section``;
 const Word = styled.span``;
+const CountCopyContainer = styled.section``;
+const Buttons = styled.section``;
 
 export default function App() {
   return (
@@ -56,14 +57,20 @@ function Header({ title }) {
 function MainContent() {
   const [list, setList] = useState([]);
   const [isNull, setNull] = useState(false);
+  const [newTextArea, setAddNewTextArea] = useState(false);
 
   useEffect(() => {
-    console.log('list', list);
+    // console.log('list', list);
   }, [list]);
+  useEffect(() => {
+    if (newTextArea === true) {
+      setAddNewTextArea(false);
+    }
+  }, [newTextArea]);
 
   function addWord(word) {
     setList((list) => {
-      if (list.includes(word)) {
+      if (list.includes(word) || !word) {
         return list;
       } else {
         return [...list, word];
@@ -72,33 +79,28 @@ function MainContent() {
   }
 
   function addDataToList(data) {
-    let m = {
-      verify: /(?:.*?[\n\s,]+)/gim,
-      // v: /(.*?)[\n\s,]+/gim,
-      v: /(.*?)(?=[\n\s,.])/gim,
-    };
+    // let m = { v: /(?:(\w+)(?=[\s,]|$))/gim };
+    let m = { v: /(.*?)(?:,|\n|$)/gim };
+
+    let matchAll = data.matchAll(m.v);
 
     // if there is no data
-    if (!list) return;
-
-    // Test stuff
-    console.log('Test ', m.v.test(data));
-    console.log('Match', data.match(m.v));
-
-    if (data.match(m.verify) === null) {
-      console.log('Data Null');
-      setNull(true);
+    if (!data) {
+      console.log(`Theres no data, returning`);
       return;
     }
 
-    data.match(m.v).forEach((word, index, arr) => {
-      // trim the word of any extra spaces
-      addWord(word.trim());
-    });
+    // Test stuff
+
+    // Add words to our list
+    for (let match of matchAll) {
+      addWord(match[1]);
+    }
   }
 
   const clearList = () => {
     setList([]);
+    setAddNewTextArea(true);
   };
 
   function copyToClipBoard() {
@@ -127,7 +129,6 @@ function MainContent() {
   }
 
   function CreateWordSection({ keyword }) {
-    console.log('keyword', keyword);
     return (
       <WordSection
         className="main-list keyword"
@@ -135,58 +136,121 @@ function MainContent() {
         key={keyword}
         style={{ marginBottom: 10 }}
       >
-        <Word className="word">
+        <Word className="word" key={`word-${keyword}`}>
           {`"${keyword}"`} <br /> {`[${keyword}]`}
         </Word>
       </WordSection>
     );
   }
 
-  function exact() {}
-  function phrase() {}
+  function CreateNewWordSection({ keyword }) {
+    return (
+      <WordSection
+        className="main-list keyword"
+        id={keyword}
+        key={keyword}
+        style={{ marginBottom: 10 }}
+      >
+        <Word className="word" key={`word-${keyword}`}>
+          {`"${keyword}"`} <br /> {`[${keyword}]`}
+        </Word>
+      </WordSection>
+    );
+  }
+
+  function RegularTextarea() {
+    return (
+      <textarea
+        style={{ height: `${s.height}px` }}
+        id="input-textarea"
+        onFocus={() => setNull(false)}
+        onBlur={(e) => {
+          if (!e.target.value) clearList();
+          addDataToList(e.target.value);
+        }}
+      ></textarea>
+    );
+  }
+  function NewTextarea() {
+    return (
+      <textarea
+        style={{ height: `${s.height}px` }}
+        id="input-textarea"
+        onFocus={() => setNull(false)}
+        onBlur={(e) => {
+          if (!e.target.value) clearList();
+          addDataToList(e.target.value);
+        }}
+      ></textarea>
+    );
+  }
+
+  function phraseAndExact() {
+    const words = Array.from(document.querySelectorAll('.word'));
+    words.forEach((tag, index) => {
+      tag.innerHTML = `"${list[index]}" <br/> [${list[index]}]`;
+    });
+  }
+
+  function exact() {
+    const words = Array.from(document.querySelectorAll('.word'));
+
+    words.forEach((tag, index) => {
+      tag.innerHTML = `[${list[index]}]`;
+    });
+  }
+
+  function phrase() {
+    const words = Array.from(document.querySelectorAll('.word'));
+    words.forEach((tag, index) => {
+      tag.innerHTML = `"${list[index]}"`;
+    });
+  }
 
   return (
     <main>
       <section className="container">
         <section className="main-main">
           <Input className="main-input">
-            {/* <section className="main-btn-type">
-                <section className="main-btn btn-phrase">Phrase only</section>
-                <section className="main-btn btn-exact">Exact only</section>
-                <section
-                  className="main-btn btn-remove"
-                  onClick={() => {
-                    clearList();
-                  }}
-                >
-                  Remove items
-                </section>
-              </section> */}
+            <Buttons className="buttons">
+              <h3
+                className="main-btn btn-phrase"
+                onClick={() => phraseAndExact()}
+              >
+                Phrase and Exact
+              </h3>
+              <h3 className="main-btn btn-phrase" onClick={() => phrase()}>
+                Phrase only
+              </h3>
+              <h3 className="main-btn btn-exact" onClick={() => exact()}>
+                Exact only
+              </h3>
+              <h3 className="main-btn btn-remove" onClick={() => clearList()}>
+                Clear
+              </h3>
+            </Buttons>
             <FlexWrapper
               className="wrapper wrapper-input"
               style={{ overflow: 'hidden' }}
             >
-              <textarea
-                style={{ height: `${s.height}px` }}
-                id="input-textarea"
-                onFocus={() => setNull(false)}
-                onBlur={(e) => {
-                  if (!e.target.value) clearList();
-                  addDataToList(e.target.value);
-                }}
-              ></textarea>
+              {!newTextArea ? <RegularTextarea /> : <NewTextarea />}
             </FlexWrapper>
           </Input>
 
           <Output className="main-output">
+            <CountCopyContainer className="count-copy-container">
+              <h3>
+                COUNT: <span style={{ fontSize: '2em' }}>{list.length}</span>
+              </h3>
+              <h3
+                className="main-btn btn-copy"
+                onClick={() => copyToClipBoard()}
+              >
+                Copy
+              </h3>
+            </CountCopyContainer>
             <FlexWrapper className="wrapper">
               <Content className="main-output-liner content">
-                <CopyButton
-                  className="main-btn btn-copy"
-                  onClick={() => copyToClipBoard()}
-                >
-                  Copy
-                </CopyButton>
                 {list.map((keyword, index) => (
                   <CreateWordSection
                     keyword={keyword}

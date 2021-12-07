@@ -7,7 +7,7 @@
   --desaturated-dark-pink: #834c69;
   --white: #e6f5ff;
   --light-grey: rgb(51 49 59 / 20%);
-  --font-size: 1em;
+  --font-size: 1.3em;
 }
 * {
   box-sizing: border-box;
@@ -76,6 +76,7 @@ main {
 
 .main-main {
   display: flex;
+  flex-flow: row wrap;
   align-items: flex-end;
   width: 100%;
 }
@@ -87,7 +88,7 @@ main {
 
 .main-output,
 .main-input {
-  flex: 1 1 auto;
+  flex: 1 1 33%;
   margin: 7px;
 }
 
@@ -112,6 +113,7 @@ textarea {
   font-weight: 500;
   background-color: var(--light-grey);
   outline: none;
+  text-align: center;
 }
 
 .main-btn-type {
@@ -142,6 +144,11 @@ textarea {
   color: var(--white);
   opacity: 0.8;
 }
+
+.btn-exact:hover {
+  background-color: rgba(255, 255, 255, 0.11);
+}
+
 .btn-phrase {
   background-color: var(--desaturated-dark-pink);
   color: var(--white);
@@ -151,14 +158,17 @@ textarea {
 .btn-remove {
   background-color: var(--light-grey);
   opacity: 0.8;
+  color: var(--desaturated-dark-pink);
+}
+
+.btn-remove:hover {
+  opacity: 1;
 }
 
 .btn-copy {
-  position: absolute;
-  left: 85%;
-  top: 20px;
   padding: 10px 20px;
   text-transform: uppercase;
+  border-radius: 7px;
 }
 
 .main-btn:hover {
@@ -180,6 +190,27 @@ textarea {
   color: var(--desaturated-dark-pink);
   font-weight: bold;
   letter-spacing: 1px;
+}
+
+.buttons,
+.count-copy-container {
+  flex: 1 1 auto;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  text-transform: uppercase;
+  flex-flow: row wrap;
+  background-color: var(--dark-greyish-red);
+}
+.count-copy-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: rgba(0, 0, 0, 0.384);
+  color: var(--white);
 }
 
 /* Track Css */
