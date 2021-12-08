@@ -1,0 +1,233 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed&display=swap');
+
+:root {
+  --blue: #1011ef;
+  --dark-greyish-red: #33313b;
+  --dark-desaturated-blue: #3c4f65;
+  --desaturated-dark-pink: #834c69;
+  --white: #e6f5ff;
+  --light-grey: rgb(51 49 59 / 20%);
+  --font-size: 1.3em;
+}
+* {
+  box-sizing: border-box;
+}
+i
+html,
+body {
+  font-size: 1em;
+  font-family: 'Barlow Condensed';
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  background-color: var(--desaturated-dark-pink);
+  height: 70px;
+  position: fixed;
+  width: 100%;
+  color: var(--white);
+  box-shadow: 0 2px 4px rgb(0 0 0 / 50%);
+  z-index: 3;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  width: 80%;
+  height: calc(100vh - 140px);
+  z-index: 1;
+}
+
+.header-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 80%;
+}
+
+.header-title,
+nav h1 {
+  font-size: 1.8em;
+}
+
+.header-title {
+  font-weight: 500;
+  cursor: pointer;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 70px;
+  width: 100%;
+}
+
+.main-main {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-end;
+  width: 100%;
+}
+
+.main-output {
+  background-color: var(--desaturated-dark-pink);
+  border-radius: 7px;
+}
+
+.main-output,
+.main-input {
+  flex: 1 1 33%;
+  margin: 7px;
+}
+
+.main-input .item {
+  margin-left: 10px;
+}
+
+.word {
+  font-size: var(--font-size);
+}
+
+textarea {
+  width: 100%;
+  word-wrap: break-word;
+  resize: none;
+  padding: 2em;
+  font-size: var(--font-size);
+  border-radius: 7px;
+  border: none;
+  font-family: 'Barlow Condensed';
+  color: black;
+  font-weight: 500;
+  background-color: var(--light-grey);
+  outline: none;
+  text-align: center;
+}
+
+.main-btn-type {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  /* background-color: #33313b; */
+  padding: 0.5em;
+  margin: 10px 0;
+  border-radius: 7px;
+}
+
+.main-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-radius: 7px;
+  padding: 0.5em;
+  min-width: fit-content;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.btn-exact,
+.btn-copy {
+  background-color: var(--dark-greyish-red);
+  color: var(--white);
+  opacity: 0.8;
+}
+
+.btn-exact:hover {
+  background-color: rgba(255, 255, 255, 0.11);
+}
+
+.btn-phrase {
+  background-color: var(--desaturated-dark-pink);
+  color: var(--white);
+  opacity: 0.8;
+}
+
+.btn-remove {
+  background-color: var(--light-grey);
+  opacity: 0.8;
+  color: var(--desaturated-dark-pink);
+}
+
+.btn-remove:hover {
+  opacity: 1;
+}
+
+.btn-copy {
+  padding: 10px 20px;
+  text-transform: uppercase;
+  border-radius: 7px;
+}
+
+.main-btn:hover {
+  opacity: 1;
+}
+
+.main-output-liner {
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 90%;
+  overflow-x: hidden;
+  padding: 1em;
+}
+
+.error {
+  color: var(--desaturated-dark-pink);
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.buttons,
+.count-copy-container {
+  flex: 1 1 auto;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  text-transform: uppercase;
+  flex-flow: row wrap;
+  background-color: var(--dark-greyish-red);
+}
+.count-copy-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: rgba(0, 0, 0, 0.384);
+  color: var(--white);
+}
+
+/* Track Css */
+
+.main-output-liner::-webkit-scrollbar {
+  width: 10px !important;
+}
+
+.main-output-liner::-webkit-scrollbar-track {
+  background-color: var(--dark-greyish-red) !important;
+  border-radius: 10px !important;
+  width: 10px !important;
+}
+
+.main-output-liner::-webkit-scrollbar-thumb {
+  background-color: var(--white);
+  border-radius: 10px;
+  width: 20px;
+  height: 10%;
+}
