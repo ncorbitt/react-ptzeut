@@ -332,6 +332,7 @@ main {
 
 .word {
   font-size: var(--font-size);
+  text-transform: capitalize;
 }
 
 textarea {
