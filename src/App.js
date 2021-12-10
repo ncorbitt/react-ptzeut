@@ -3,7 +3,12 @@ import './style.css';
 import styled from 'styled-components';
 
 import { Random } from '@styled-icons/fa-solid/Random';
+import { ThumbsUp } from '@styled-icons/fa-solid/ThumbsUp';
 import { ErrorAlt } from '@styled-icons/boxicons-regular/ErrorAlt';
+
+const BrownThumbsUp = styled(ThumbsUp)`
+  color:var(--white);
+`;
 
 const s = {
   height: 450,
@@ -57,16 +62,24 @@ function Header({ title }) {
 function MainContent() {
   const [list, setList] = useState([]);
   const [isNull, setNull] = useState(false);
-  const [newTextArea, setAddNewTextArea] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     // console.log('list', list);
   }, [list]);
-  useEffect(() => {
-    if (newTextArea === true) {
-      setAddNewTextArea(false);
-    }
-  }, [newTextArea]);
+
+  // useEffect(() => {
+  //   if (!copied) {
+  //     let c = document.querySelector('.copied-container');
+  //     c.classList.remove('animate');
+  //   }
+
+  //   if (copied === true) {
+  //     let c = document.querySelector('.copied-container');
+  //     c.classList.add('animate');
+  //     // setCopied(false);
+  //   }
+  // }, [copied]);
 
   function addWord(word) {
     setList((list) => {
@@ -100,7 +113,6 @@ function MainContent() {
 
   const clearList = () => {
     setList([]);
-    setAddNewTextArea(true);
   };
 
   function copyToClipBoard() {
@@ -111,12 +123,12 @@ function MainContent() {
       return `${text.outerText} \n\n`;
     });
 
-    console.log(allText.toString());
     const n = allText.toString().replace(/[,\d]/gim, '');
 
     clipBoard.writeText(n).then(
       function () {
-        alert('successful copy');
+        alert('Copied!');
+        // setCopied(true);
       },
       function (e) {
         alert('error', e);
@@ -214,6 +226,14 @@ function MainContent() {
       tag.innerHTML = `"${list[index]}"`;
     });
   }
+  function Copied() {
+    return (
+      <section className="copied-container">
+        <BrownThumbsUp size="24" />
+        <p className="copied-text">COPIED!</p>
+      </section>
+    );
+  }
 
   return (
     <main>
@@ -237,21 +257,20 @@ function MainContent() {
                 Clear
               </h3>
             </Buttons>
-            <FlexWrapper
-              className="wrapper wrapper-input"
-              style={{ overflow: 'hidden' }}
-            >
-              {!newTextArea ? <RegularTextarea /> : <NewTextarea />}
+            <FlexWrapper className="wrapper wrapper-input">
+              <RegularTextarea />
             </FlexWrapper>
           </Input>
 
           <Output className="main-output">
+            <Copied />
             <CountCopyContainer className="count-copy-container">
               <h3>
                 COUNT: <span style={{ fontSize: '2em' }}>{list.length}</span>
               </h3>
               <h3
                 className="main-btn btn-copy"
+                style={{ display: list.length === 0 ? 'none' : 'block' }}
                 onClick={() => copyToClipBoard()}
               >
                 Copy
