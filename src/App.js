@@ -73,7 +73,7 @@ function MainContent() {
       if (list.includes(word) || !word) {
         return list;
       } else {
-        return [...list, word];
+        return [...list, word.trim()];
       }
     });
   }
@@ -111,7 +111,8 @@ function MainContent() {
       return `${text.outerText} \n\n`;
     });
 
-    const n = allText.toString().replace(/[,]/gim, '');
+    console.log(allText.toString());
+    const n = allText.toString().replace(/[,\d]/gim, '');
 
     clipBoard.writeText(n).then(
       function () {
@@ -138,6 +139,13 @@ function MainContent() {
       >
         <Word className="word" key={`word-${keyword}`}>
           {`"${keyword}"`} <br /> {`[${keyword}]`}
+        </Word>
+        <Word
+          id="word-length"
+          className="word-length"
+          style={{ fontSize: '2em' }}
+        >
+          {keyword.split('').length}
         </Word>
       </WordSection>
     );
