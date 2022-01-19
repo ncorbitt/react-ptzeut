@@ -68,19 +68,6 @@ function MainContent() {
     // console.log('list', list);
   }, [list]);
 
-  // useEffect(() => {
-  //   if (!copied) {
-  //     let c = document.querySelector('.copied-container');
-  //     c.classList.remove('animate');
-  //   }
-
-  //   if (copied === true) {
-  //     let c = document.querySelector('.copied-container');
-  //     c.classList.add('animate');
-  //     // setCopied(false);
-  //   }
-  // }, [copied]);
-
   function addWord(word) {
     setList((list) => {
       if (list.includes(word) || !word) {
@@ -119,19 +106,20 @@ function MainContent() {
     const clipBoard = navigator.clipboard;
 
     let arr = Array.from(document.getElementsByClassName('main-list'));
-    const allText = arr.map((text, index) => {
-      return `${text.outerText} \n\n`;
-    });
+    const allText = arr.map((text) => `${text.outerText} \n\n`);
 
-    const n = allText.toString().replace(/[,\d]/gim, '');
+    console.log('alltext:', allText[0]);
+
+    const n = allText.toString().replace(/[,]/gim, '');
+    console.log('n', n);
 
     clipBoard.writeText(n).then(
       function () {
         alert('Copied!');
-        // setCopied(true);
       },
       function (e) {
-        alert('error', e);
+        alert(`error`, e);
+        console.log('error', e);
       }
     );
   }
