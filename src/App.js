@@ -21,7 +21,7 @@ const FlexWrapper = styled.section`
   justify-content: center;
   width: 100%;
   height: ${s.height}px;
-  border-radius: 7px;
+  border-radius: 0px;
   color: var(--white);
   overflow-y: auto;
 `;
@@ -106,7 +106,7 @@ function MainContent() {
     const clipBoard = navigator.clipboard;
 
     let arr = Array.from(document.getElementsByClassName('main-list'));
-    const allText = arr.map((text) => `${text.outerText} \n\n`);
+    const allText = arr.map((text) => `${text.outerText} \n`);
 
     console.log('alltext:', allText);
 
