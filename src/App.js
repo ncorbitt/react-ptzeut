@@ -65,7 +65,7 @@ function MainContent() {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    // console.log('list', list);
+    console.log('list', list);
   }, [list]);
 
   function addWord(word) {
@@ -73,7 +73,7 @@ function MainContent() {
       if (list.includes(word) || !word) {
         return list;
       } else {
-        return [...list, word.trim()];
+        return [...list, [word.trim(), word.length]];
       }
     });
   }
@@ -108,9 +108,10 @@ function MainContent() {
     let arr = Array.from(document.getElementsByClassName('main-list'));
     const allText = arr.map((text) => `${text.outerText} \n\n`);
 
-    console.log('alltext:', allText[0]);
+    console.log('alltext:', allText);
 
-    const n = allText.toString().replace(/[,]/gim, '');
+    const n = allText.toString().replace(/[,]|\b\d*/gim, '');
+
     console.log('n', n);
 
     clipBoard.writeText(n).then(
@@ -133,19 +134,19 @@ function MainContent() {
     return (
       <WordSection
         className="main-list keyword"
-        id={keyword}
-        key={keyword}
+        id={keyword[0]}
+        key={keyword[0]}
         style={{ marginBottom: 10 }}
       >
-        <Word className="word" key={`word-${keyword}`}>
-          {`"${keyword}"`} <br /> {`[${keyword}]`}
+        <Word className="word" key={`word-${keyword[0]}`}>
+          {`"${keyword[0]}"`} <br /> {`[${keyword[0]}]`}
         </Word>
         <Word
           id="word-length"
           className="word-length"
           style={{ fontSize: '2em' }}
         >
-          {keyword.split('').length}
+          {keyword[1]}
         </Word>
       </WordSection>
     );
@@ -195,8 +196,9 @@ function MainContent() {
 
   function phraseAndExact() {
     const words = Array.from(document.querySelectorAll('.word'));
-    words.forEach((tag, index) => {
-      tag.innerHTML = `"${list[index]}" <br/> [${list[index]}]`;
+    console.log(words);
+    return words.forEach((tag, index) => {
+      tag.innerHTML = `"${list[index][0]}" <br/> [${list[index][0]}]`;
     });
   }
 
@@ -204,14 +206,14 @@ function MainContent() {
     const words = Array.from(document.querySelectorAll('.word'));
 
     words.forEach((tag, index) => {
-      tag.innerHTML = `[${list[index]}]`;
+      tag.innerHTML = `[${list[index][0]}]`;
     });
   }
 
   function phrase() {
     const words = Array.from(document.querySelectorAll('.word'));
     words.forEach((tag, index) => {
-      tag.innerHTML = `"${list[index]}"`;
+      tag.innerHTML = `"${list[index][0]}"`;
     });
   }
   function Copied() {
