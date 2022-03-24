@@ -204,7 +204,6 @@ function MainContent() {
 
   function exact() {
     const words = Array.from(document.querySelectorAll('.word'));
-
     words.forEach((tag, index) => {
       tag.innerHTML = `[${list[index][0]}]`;
     });
@@ -216,6 +215,14 @@ function MainContent() {
       tag.innerHTML = `"${list[index][0]}"`;
     });
   }
+
+  function broad() {
+    const words = Array.from(document.querySelectorAll('.word'));
+    words.forEach((tag, index) => {
+      tag.innerHTML = `${list[index][0]}`;
+    });
+  }
+
   function Copied() {
     return (
       <section className="copied-container">
@@ -235,13 +242,16 @@ function MainContent() {
                 className="main-btn btn-phrase"
                 onClick={() => phraseAndExact()}
               >
-                Phrase and Exact
+                Phrase | Exact
               </h3>
               <h3 className="main-btn btn-phrase" onClick={() => phrase()}>
-                Phrase only
+                Phrase
               </h3>
               <h3 className="main-btn btn-exact" onClick={() => exact()}>
-                Exact only
+                Exact
+              </h3>
+              <h3 className="main-btn btn-exact" onClick={() => broad()}>
+                Broad
               </h3>
               <h3 className="main-btn btn-remove" onClick={() => clearList()}>
                 Clear
