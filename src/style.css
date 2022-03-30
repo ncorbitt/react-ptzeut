@@ -216,6 +216,8 @@ textarea {
   text-transform: uppercase;
   flex-flow: row wrap;
   background-color: var(--dark-greyish-red);
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
 }
 
 .count-copy-container {
