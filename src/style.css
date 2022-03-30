@@ -2,6 +2,7 @@
 
 :root {
   --blue: #1011ef;
+  --black-tinted: rgb(51 49 59 / 57%);
   --dark-greyish-red: #33313b;
   --dark-desaturated-blue: #3c4f65;
   --desaturated-dark-pink: #834c69;
@@ -215,7 +216,7 @@ textarea {
   justify-content: space-around;
   text-transform: uppercase;
   flex-flow: row wrap;
-  background-color: var(--dark-greyish-red);
+  background-color: var(--black-tinted);
   border-top-left-radius: 7px;
   border-top-right-radius: 7px;
 }
